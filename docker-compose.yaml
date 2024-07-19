@@ -1,0 +1,15 @@
+services:
+
+  ws-server-go:
+    build:
+      dockerfile: Dockerfile
+      context: ws-server-go
+    ports:
+      - "18080:8080"
+
+  ws-server-rs:
+    build:
+      dockerfile: Dockerfile
+      context: ws-server-rs
+    ports:
+      - "18081:8081"
