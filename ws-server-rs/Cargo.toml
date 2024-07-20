@@ -5,6 +5,7 @@ edition = "2021"
 
 [dependencies]
 axum = { version = "0.7", features = ["ws"]}
+ctrlc = "3.4.4"
 lazy_static = "1.5"
 prometheus = "0.13"
 serde = { version = "1.0",  features = ["derive"] }

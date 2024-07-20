@@ -4,6 +4,7 @@ use axum::{
     routing::get,
     Router,
 };
+use std::sync::mpsc::channel;
 use lazy_static::lazy_static;
 use prometheus::{labels, opts, register_int_gauge, Encoder, IntGauge, TextEncoder};
 
@@ -16,15 +17,25 @@ lazy_static! {
 
 #[tokio::main]
 async fn main() {
-    let app = Router::new()
-        .route("/", get(home))
-        .route("/ws", get(ws))
-        .route("/metrics", get(metrics));
+    let (tx, rx) = channel();
 
-    let listener = tokio::net::TcpListener::bind("0.0.0.0:8081").await.unwrap();
-    println!("Starting rust http server");
-    LIVE_USERS.set(0);
-    axum::serve(listener, app).await.unwrap();
+    ctrlc::set_handler(move || tx.send(()).expect("Could not send signal on channel."))
+        .expect("Error setting Ctrl-C handler");
+
+    tokio::spawn(async {
+        let app = Router::new()
+            .route("/", get(home))
+            .route("/ws", get(ws))
+            .route("/metrics", get(metrics));
+
+        let listener = tokio::net::TcpListener::bind("0.0.0.0:8081").await.unwrap();
+        println!("Starting rust http server");
+        LIVE_USERS.set(0);
+        axum::serve(listener, app).await.unwrap();
+    });
+
+    rx.recv().expect("Could not receive from channel.");
+    println!("Graceful shutdown")
 }
 
 // basic handler that responds with a static string
@@ -68,7 +79,6 @@ async fn handle_socket(mut socket: WebSocket) {
 }
 
 async fn metrics() -> String {
-    println!("metrics handler");
     let mut buffer = vec![];
     let encoder = TextEncoder::new();
     let mf = prometheus::gather();
