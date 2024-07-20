@@ -12,4 +12,4 @@ rust:
 
 .PHONY: go
 go:
-	cd ws-server-go && go run main.go
+	cd ws-server-go && go mod download && go run main.go
