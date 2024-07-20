@@ -3,3 +3,18 @@ logging {
   format = "json"
 }
 
+prometheus.scrape "ws_server_go" {
+  targets = [{
+    __address__ = "ws-server-go:8080",
+  }]
+
+  forward_to = []
+}
+
+prometheus.scrape "ws_server_rust" {
+  targets = [{
+    __address__ = "ws-server-rs:8081",
+  }]
+
+  forward_to = []
+}
