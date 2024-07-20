@@ -6,6 +6,7 @@
     "words": [
         "promauto",
         "promhttp",
+        "tsdb",
         "upgrader",
         "Upgrader"
     ],

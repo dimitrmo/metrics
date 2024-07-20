@@ -8,7 +8,7 @@ prometheus.scrape "ws_server_go" {
     __address__ = "ws-server-go:8080",
   }]
 
-  forward_to = []
+  forward_to = [prometheus.remote_write.prometheus.receiver]
 }
 
 prometheus.scrape "ws_server_rust" {
@@ -16,5 +16,16 @@ prometheus.scrape "ws_server_rust" {
     __address__ = "ws-server-rs:8081",
   }]
 
-  forward_to = []
+  forward_to = [prometheus.remote_write.prometheus.receiver]
+}
+
+prometheus.remote_write "prometheus" {
+    endpoint {
+        url = "http://prometheus:9090/api/v1/write"
+
+        // basic_auth {
+        //   username = "admin"
+        //   password = "admin"
+        // }
+    }
 }
