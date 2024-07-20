@@ -27,10 +27,10 @@ make rust
 ### Run both servers with docker-compose
 
 ```sh
-make run
+make run # or docker-compose up
 ```
 
-## Endpoints
+## Endpoints (both)
 
 ### Home
 
