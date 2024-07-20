@@ -12,7 +12,7 @@ Server will start running at port 8080
 
 ```sh
 make go
-# Starting golang http server
+#> Starting golang http server
 ```
 
 ### Running Rust server
@@ -21,7 +21,7 @@ Server will start running at port 8081
 
 ```sh
 make rust
-# Starting rust http server
+#> Starting rust http server
 ```
 
 ### Run both servers with docker-compose
