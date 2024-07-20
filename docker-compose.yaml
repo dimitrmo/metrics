@@ -1,6 +1,8 @@
 services:
 
   ws-server-go:
+    container_name: ws-server-go
+    restart: unless-stopped
     build:
       dockerfile: Dockerfile
       context: ws-server-go
@@ -8,6 +10,8 @@ services:
       - "8080:8080"
 
   ws-server-rs:
+    container_name: ws-server-rs
+    restart: unless-stopped
     build:
       dockerfile: Dockerfile
       context: ws-server-rs
@@ -15,6 +19,8 @@ services:
       - "8081:8081"
 
   grafana-alloy:
+    container_name: grafana-alloy
+    restart: unless-stopped
     build:
       dockerfile: Dockerfile
       context: grafana-alloy
