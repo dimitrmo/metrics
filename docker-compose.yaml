@@ -13,3 +13,18 @@ services:
       context: ws-server-rs
     ports:
       - "8081:8081"
+
+  grafana-alloy:
+    build:
+      dockerfile: Dockerfile
+      context: grafana-alloy
+    command:
+      - "run"
+      - "/etc/alloy/config.alloy"
+      - "--server.http.listen-addr=0.0.0.0:12345" # this is important
+      - "--storage.path=/var/lib/alloy/data"
+    ports:
+      - "12345:12345"
+    links:
+      - ws-server-go
+      - ws-server-rs
