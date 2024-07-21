@@ -3,6 +3,13 @@ logging {
   format = "json"
 }
 
+prometheus.exporter.self "alloy" {}
+
+prometheus.scrape "self" {
+  targets    = prometheus.exporter.self.alloy.targets
+  forward_to = [prometheus.remote_write.prometheus.receiver]
+}
+
 prometheus.scrape "ws_server_go" {
   targets = [{
     __address__ = "ws-server-go:8080",
