@@ -39,3 +39,16 @@ services:
 #      - ws-server-go
 #      - ws-server-rs
 #      - prometheus
+
+  fluent-bit:
+    container_name: fluent-bit
+    restart: unless-stopped
+    build:
+      dockerfile: Dockerfile
+      context: fluent-bit
+    ports:
+      - "2021:2021"
+    links:
+      - ws-server-go
+      - ws-server-rs
+      - prometheus
