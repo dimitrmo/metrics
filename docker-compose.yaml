@@ -27,15 +27,15 @@ services:
     ports:
       - "9090:9090"
 
-  grafana-alloy:
-    container_name: grafana-alloy
-    restart: unless-stopped
-    build:
-      dockerfile: Dockerfile
-      context: grafana-alloy
-    ports:
-      - "12345:12345"
-    links:
-      - ws-server-go
-      - ws-server-rs
-      - prometheus
+#  grafana-alloy:
+#    container_name: grafana-alloy
+#    restart: unless-stopped
+#    build:
+#      dockerfile: Dockerfile
+#      context: grafana-alloy
+#    ports:
+#      - "12345:12345"
+#    links:
+#      - ws-server-go
+#      - ws-server-rs
+#      - prometheus
